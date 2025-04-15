@@ -1,2 +1,3 @@
-# jmq_chirpstack
-Python API for Chirpstack
+# mi_paquete
+
+Este es un paquete de ejemplo.
