@@ -14,12 +14,12 @@ class JMQChirpstackAPI:
         if self.api_key:
             self.headers["Authorization"] = f"Bearer {self.api_key}"
 
-    def _get_paginated_results(
+    def _get_paginated_result(
         self,
         endpoint: str,
         extra_params: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        results = []
+        result = []
         limit = 100
         offset = 0
         total_count = None
@@ -36,25 +36,25 @@ class JMQChirpstackAPI:
                 total_count = int(data.get("totalCount", 0))
 
             batch = data.get("result", [])
-            results.extend(batch)
+            result.extend(batch)
 
             if len(batch) < limit:
                 break
             offset += limit
 
-        return {"total": total_count, "results": results}
+        return {"total": total_count, "result": result}
 
     def get_tenants(self) -> List[Dict[str, Any]]:
-        return self._get_paginated_results("tenants")
+        return self._get_paginated_result("tenants")
 
     def get_gateways(self, tenant_id: str) -> List[Dict[str, Any]]:
-        return self._get_paginated_results("gateways", extra_params={"tenantID": tenant_id})
+        return self._get_paginated_result("gateways", extra_params={"tenantID": tenant_id})
 
     def get_applications(self, tenant_id: str) -> Dict[str, Any]:
-        return self._get_paginated_results("applications", extra_params={"tenant_id": tenant_id})
+        return self._get_paginated_result("applications", extra_params={"tenant_id": tenant_id})
 
     def get_devices(self, application_id: str) -> Dict[str, Any]:
-        return self._get_paginated_results("devices", extra_params={"application_id": application_id})
+        return self._get_paginated_result("devices", extra_params={"application_id": application_id})
 
     def get_device(self, dev_eui: str) -> Dict[str, Any]:
         url = f"{self.base_url}/devices/{dev_eui}"
@@ -63,7 +63,7 @@ class JMQChirpstackAPI:
         return response.json()
 
     def get_device_profiles(self, tenant_id: str) -> Dict[str, Any]:
-        return self._get_paginated_results("device-profiles", extra_params={"tenant_id": tenant_id})
+        return self._get_paginated_result("device-profiles", extra_params={"tenant_id": tenant_id})
 
     def get_device_profile(self, device_profile_id: str) -> Dict[str, Any]:
         url = f"{self.base_url}/device-profiles/{device_profile_id}"
@@ -72,10 +72,10 @@ class JMQChirpstackAPI:
         return response.json()
 
     def get_users(self) -> Dict[str, Any]:
-        return self._get_paginated_results("users")
+        return self._get_paginated_result("users")
 
     def get_multicast_groups(self, application_id: str) -> Dict[str, Any]:
-        return self._get_paginated_results("multicast-groups", extra_params={"application_id": application_id})
+        return self._get_paginated_result("multicast-groups", extra_params={"application_id": application_id})
 
     def get_gateway(self, gateway_id: str) -> Dict[str, Any]:
         url = f"{self.base_url}/gateways/{gateway_id}"
@@ -101,8 +101,8 @@ if __name__ == "__main__":
         tenants = api.get_tenants()
         print("Tenants:", tenants)
 
-        if tenants["results"]:
-            tenant_id = tenants["results"][0]["id"]
+        if tenants["result"]:
+            tenant_id = tenants["result"][0]["id"]
 
             gateways = api.get_gateways(tenant_id)
             print("Gateways:", gateways)
@@ -110,14 +110,14 @@ if __name__ == "__main__":
             applications = api.get_applications(tenant_id)
             print("Applications:", applications)
 
-            if applications["results"]:
-                app_id = applications["results"][0]["id"]
+            if applications["result"]:
+                app_id = applications["result"][0]["id"]
 
                 devices = api.get_devices(app_id)
                 print("Devices:", devices)
 
-                if devices["results"]:
-                    dev_eui = devices["results"][0]["devEui"]
+                if devices["result"]:
+                    dev_eui = devices["result"][0]["devEui"]
                     device = api.get_device(dev_eui)
                     print("Device detail:", device)
 

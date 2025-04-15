@@ -43,12 +43,12 @@ Documenta bien en README.md.
 
 
 
-## Correr los TEST
+## Instalar comoe ditable y correr los TESTs
 
 ```commandline
 pip install -e . --break-system-packages
 ```
 
 ```bash
-python tests/test_chirpstack_api.py
+python3 tests/test_chirpstack_api.py
 ```
