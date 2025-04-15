@@ -1,9 +1,6 @@
 import requests
 from typing import Optional, Any, Dict, List
 
-import requests
-from typing import Optional, Any, Dict, List
-
 class JMQChirpstackAPI:
     def __init__(self, base_url: str, api_key: Optional[str] = None) -> None:
         self.base_url = base_url.rstrip('/')
