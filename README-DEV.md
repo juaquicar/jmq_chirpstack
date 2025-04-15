@@ -40,3 +40,15 @@ Documenta bien en README.md.
 ❌ 403 Forbidden → credenciales mal o no verificaste tu email.
 
 ❌ long_description mal → asegúrate de que README.md está en markdown y bien referenciado en setup.py.
+
+
+
+## Correr los TEST
+
+```commandline
+pip install -e . --break-system-packages
+```
+
+```bash
+python tests/test_chirpstack_api.py
+```
