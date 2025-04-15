@@ -25,6 +25,8 @@ pip install git+https://github.com/juaquicar/jmq_chirpstack.git
 
 - Python >= 3.6
 - Access to the ChirpStack API with a valid API Key
+- Version: v4.11.1 Testeada
+
 
 ---
 
